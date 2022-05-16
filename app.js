@@ -10,10 +10,21 @@ function generateCodeForSize(percent) {
     let hscode = `
     <script>
         // size
-        const _shape = document.querySelector('.tn-atom');
-        const size = _shape.clientWidth*(1 + ${percent}/100);
-        _shape.style.width = size + 'px';
-        _shape.style.height = size + 'px';
+        let isClicked = false;
+        const shape = document.querySelector('.tn-atom');
+        
+        const defaultSize = shape.clientWidth; // тк это квадрат то все равно, можно сократить код
+        
+        shape.addEventListener('click', () => {
+            const size = isClicked ? defaultSize : shape.clientWidth*(1 + ${percent}/100);  
+            
+            shape.style.width = size + 'px';
+            shape.style.height = size + 'px';
+            
+            shape.style.minWidth=shape.style.width;
+            isClicked = !isClicked;
+        });
+                
     </script>`;
 
     generatecode(hscode);
